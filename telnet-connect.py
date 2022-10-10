@@ -39,3 +39,7 @@ print('--- Username: ', username)
 print('--- Password: ', password)
 print('------------------------------------------------------'
   
+#End session
+session.sendline('quit')
+session.close()
+
