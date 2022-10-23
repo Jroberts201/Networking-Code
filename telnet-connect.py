@@ -28,6 +28,7 @@ if result != 0:
 print('Connected to ', ip_address)
 #Credentials now must be sent
 #Username & Error Check
+print('Testing Username')
 session.sendline(tel_username)
 result = session.expect(['Password:', pexpect.TIMEOUT])
 
@@ -36,6 +37,7 @@ if result != 0:
     exit()
 
 #Password & Error Check
+print('Testing Password')
 session.sendline(tel_password)
 #expect # as we should be logged into privilleged mode using a level 15 account
 result = session.expect(['#', pexpect.TIMEOUT])
