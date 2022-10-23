@@ -1,45 +1,58 @@
-#Importing required assests
+#Importing Assets
 import pexpect
 
-#Variable List
-ip_address = '192.168.x.x'
-username = 'cisco' #example name
-password = 'cisco123!' #example password
+#Assinging Variables
+#Get IP address from topology ASAP
+ip_address = 'x.x.x.x'
+#User Credentials
+username = ''
+password = ''
+#Admin password 
+admin_password = ''
 
-#Open telenet
-session = pexpect.spawn('telnet ' + ip_address, encoding='utf-8', timeout=20)
-result = session.expect(['Username:', pexpect.TIMEOUT])
 
-#Error check
-if result != 0:
-  print("Failure to create session: ", ip_address)
-  exit()
-  
-#Sending Details
+#-------------Telnet----------------#
+#Informing User of startup and warning of security risk
+print('Begining Telnet connection to ', ip_address, ' Please note this is not Secure.')
+#Create Telnet session - Spawn Session with IP & Include a 20 second countdown to timeout
+session = pexpect.spawn('telnet ' + ip_address, timeout=20)
+#Expect username if not Timeout
+result = session.expect(['username:', pexpect.TIMEOUT])
 
-#Username + error catch
+#Error Check to allow user to know where issues lay
+if result != 0: 
+    print( 'Failure to acquire: ', ip_address)
+    print( 'Please check IP Address and try again.')
+    exit()
+    
+#Credentials now must be sent
+#Username & Error Check
 session.sendline(username)
 result = session.expect(['Password:', pexpect.TIMEOUT])
 
 if result != 0:
-  print("Failure | Incorrect Username: ", username)
-  exit()
-  
-#Password + error catch
+    print('Failure | Incorrect Username: ', username)
+    exit()
+
+#Password & Error Check
 session.sendline(password)
-result = session.expect(['#', pexpect.TIMEOUT])
+#expect > as we should not be logged into privilleged mode
+result = session.expect(['>', pexpect.TIMEOUT])
 
 if result != 0:
-  print("Failure | Incorrect Username: ", password)
-  exit()
-  
-  # Success Message
-print('--- Success! connecting to: ', ip_address)
-print('--- Username: ', username)
-print('--- Password: ', password)
-print('------------------------------------------------------'
-  
+    print('Failure | Incorrect Password: ', password)
+    exit()
+      
+# Final Message to allow user to see successful login
+print('-------------------------Telnet-----------------------------')
+print('> Connected to: ', ip_address)
+print('> Credentials <')
+print('> Username: ', username)
+print('> Password: ', password) 
+print('------------------------------------------------------------')
+
 #End session
+#sends quit to console logging us out & informing user
+print('Quitting Telnet Connection. Goodbye', username)
 session.sendline('quit')
 session.close()
-
