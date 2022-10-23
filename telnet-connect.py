@@ -13,7 +13,7 @@ admin_password = ''
 
 #-------------Telnet----------------#
 #Informing User of startup and warning of security risk
-print('Begining Telnet connection to ', ip_address, ' Please note this is not Secure.')
+print('Begining Telnet connection to: ', ip_address, 'Please note this is not Secure.')
 #Create Telnet session - Spawn Session with IP & Include a 20 second countdown to timeout
 session = pexpect.spawn('telnet ' + ip_address, timeout=20)
 #Expect username if not Timeout
