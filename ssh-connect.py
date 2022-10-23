@@ -1,59 +1,73 @@
-#Importing Assets
+# Import Assets
 import pexpect
 
-#Assinging Variables
+#Variable List
 ip_address = '192.168.56.101'
-#User Credentials
-tel_username = 'cisco'
-tel_password = 'cisco123!'
-ssh_username = ''
-ssh_password = ''
-#Admin password 
-admin_password = ''
+username = 'prne'
+password = 'cisco123!'
+password_enable = 'class123!'
 
-#-------------Telnet----------------#
-
-#Informing User of startup and warning of security risk
-print('Begining Telnet connection to ', ip_address, ' Please note this is not Secure.')
-#Create Telnet session - Spawn Session with IP & Include a 20 second countdown to timeout
-session = pexpect.spawn('telnet ' + ip_address, timeout=20)
-#Expect username if not Timeout
-result = session.expect(['Username:', pexpect.TIMEOUT])
-
-#Error Check to allow user to know where issues lay
-if result != 0: 
-    print( 'Failure to acquire: ', ip_address)
-    print( 'Please check IP Address and try again.')
-    exit()
-print('Connected to ', ip_address)
-#Credentials now must be sent
-#Username & Error Check
-session.sendline(tel_username)
-result = session.expect(['Password:', pexpect.TIMEOUT])
+# Open SSH Session giving username and IP to connect
+session = pexpect.spawn('ssh ' + username + '@' + ip_address,
+ encoding='utf-8', timeout=20)
+result = session.expect(['Password:', pexpect.TIMEOUT, pexpect.EOF])
+# Error check
+if result != 0:
+ print('--- Failure | creating session for: ', ip_address)
+ exit()
+  
+#Password and error check
+session.sendline(password)
+result = session.expect(['>', pexpect.TIMEOUT, pexpect.EOF])
 
 if result != 0:
-    print('Failure | Incorrect Username: ', username)
-    exit()
-
-#Password & Error Check
-session.sendline(tel_password)
-#expect # as we should be logged into privilleged mode using a level 15 account
-result = session.expect(['#', pexpect.TIMEOUT])
+ print('--- Failure | Incorrect Password: ', password)
+ exit()
+  
+# Message to confirm Logon
+print('--- Success! connecting to: ', ip_address)
+print('--- Username: ', username)
+print('--- Password: ', password)
+  
+# Enter Privilleged mode /w Error checking
+session.sendline('enable')
+result = session.expect(['Password:', pexpect.TIMEOUT, pexpect.EOF])
 
 if result != 0:
-    print('Failure | Incorrect Password: ', password)
-    exit()
-      
-# Final Message to allow user to see successful login
-print('-------------------------Telnet-----------------------------')
-print('> Connected to: ', ip_address)
-print('> Credentials <')
-print('> Username: ', tel_username)
-print('> Password: ', tel_password) 
-print('------------------------------------------------------------')
+ print('--- Failure | Unable to eneter Privilleged Mode')
+ exit()
+  
+# Admin Password
+session.sendline(password_enable)
+result = session.expect(['#', pexpect.TIMEOUT, pexpect.EOF])
 
-#End session
-#sends quit to console logging us out & informing user
-print('Quitting Telnet Connection. Goodbye', tel_username)
-session.sendline('quit')
+if result != 0:
+ print('--- Failure | Retry password')
+ exit()
+  
+# config mode
+session.sendline('configure terminal')
+result = session.expect([r'.\(config\)#', pexpect.TIMEOUT, pexpect.EOF])
+
+if result != 0:
+ print('--- Failure | Unable to enter config mode')
+ exit()
+  
+# Insert what needs doing here an example is changing host name via
+session.sendline('hostname R1')
+result = session.expect([r'R1\(config\)#', pexpect.TIMEOUT, pexpect.EOF])
+
+if result != 0:
+ print('--- Failure! setting hostname')
+# Though more config can be done this way so long as you understand how
+
+# Exit config mode
+session.sendline('exit')
+# Exit enable mode
+session.sendline('exit')
+
+# Completion Message - Change depending on task at hand
+print('--- Success in task: Configuring Hostname) 
+
+# Terminate SSH session
 session.close()
