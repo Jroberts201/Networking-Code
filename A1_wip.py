@@ -66,7 +66,7 @@ def telnet_connect():
     print('Disconnected.')
     
 #-------------SSH----------------# 
-def ssh_connect()
+def ssh_connect():
     #Let user know we're starting SSH Session  
     print('Begining SSH connection to ', ip_address)
 
@@ -103,7 +103,7 @@ def ssh_connect()
     print('Disconnected.')
     
 #-------------Cisco Backup----------------# 
-def configuration_backup()
+def configuration_backup():
     print('Begining Config Backup via Telnet')
 
     #Informing User of startup and warning of security risk
