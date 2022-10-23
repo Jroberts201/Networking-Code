@@ -2,32 +2,33 @@
 import pexpect
 
 #Assinging Variables
-#Get IP address from topology ASAP
-ip_address = 'x.x.x.x'
+ip_address = '192.168.56.101'
 #User Credentials
-username = ''
-password = ''
+tel_username = 'cisco'
+tel_password = 'cisco123!'
+ssh_username = ''
+ssh_password = ''
 #Admin password 
 admin_password = ''
 
-
 #-------------Telnet----------------#
+
 #Informing User of startup and warning of security risk
-print('Begining Telnet connection to: ', ip_address, 'Please note this is not Secure.')
+print('Begining Telnet connection to ', ip_address, ' Please note this is not Secure.')
 #Create Telnet session - Spawn Session with IP & Include a 20 second countdown to timeout
 session = pexpect.spawn('telnet ' + ip_address, timeout=20)
 #Expect username if not Timeout
-result = session.expect(['username:', pexpect.TIMEOUT])
+result = session.expect(['Username:', pexpect.TIMEOUT])
 
 #Error Check to allow user to know where issues lay
 if result != 0: 
     print( 'Failure to acquire: ', ip_address)
     print( 'Please check IP Address and try again.')
     exit()
-    
+print('Connected to ', ip_address)
 #Credentials now must be sent
 #Username & Error Check
-session.sendline(username)
+session.sendline(tel_username)
 result = session.expect(['Password:', pexpect.TIMEOUT])
 
 if result != 0:
@@ -35,9 +36,9 @@ if result != 0:
     exit()
 
 #Password & Error Check
-session.sendline(password)
-#expect > as we should not be logged into privilleged mode
-result = session.expect(['>', pexpect.TIMEOUT])
+session.sendline(tel_password)
+#expect # as we should be logged into privilleged mode using a level 15 account
+result = session.expect(['#', pexpect.TIMEOUT])
 
 if result != 0:
     print('Failure | Incorrect Password: ', password)
@@ -47,12 +48,12 @@ if result != 0:
 print('-------------------------Telnet-----------------------------')
 print('> Connected to: ', ip_address)
 print('> Credentials <')
-print('> Username: ', username)
-print('> Password: ', password) 
+print('> Username: ', tel_username)
+print('> Password: ', tel_password) 
 print('------------------------------------------------------------')
 
 #End session
 #sends quit to console logging us out & informing user
-print('Quitting Telnet Connection. Goodbye', username)
+print('Quitting Telnet Connection. Goodbye', tel_username)
 session.sendline('quit')
 session.close()
