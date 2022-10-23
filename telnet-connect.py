@@ -32,7 +32,7 @@ session.sendline(tel_username)
 result = session.expect(['Password:', pexpect.TIMEOUT])
 
 if result != 0:
-    print('Failure | Incorrect Username: ', username)
+    print('Failure | Incorrect Username: ', tel_username)
     exit()
 
 #Password & Error Check
@@ -41,7 +41,7 @@ session.sendline(tel_password)
 result = session.expect(['#', pexpect.TIMEOUT])
 
 if result != 0:
-    print('Failure | Incorrect Password: ', password)
+    print('Failure | Incorrect Password: ', tel_password)
     exit()
       
 # Final Message to allow user to see successful login
