@@ -163,7 +163,6 @@ def configuration_backup():
     print('> Credentials <')
     print('> Username: ', tel_username)
     print('> Password: ', password) 
-    print('> Router Configuration Saved as<', + 'Router_Config_', + HOST)
     print('------------------------------------------------------------')
 
     #End session
