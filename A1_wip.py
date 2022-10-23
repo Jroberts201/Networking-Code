@@ -9,11 +9,10 @@ import getpass
 ip_address = '192.168.56.101'
 #User Credentials
 tel_username = 'cisco'
-tel_password = 'cisco123!'
-ssh_username = ''
-ssh_password = ''
+password = 'cisco123!'
+ssh_username = 'prne'
 #Admin password 
-admin_password = ''
+admin_password = 'class123!'
 
 #-------------Telnet----------------#
 def telnet_connect():
@@ -42,12 +41,12 @@ def telnet_connect():
 
     #Password & Error Check
     print('Testing Password')
-    session.sendline(tel_password)
+    session.sendline(password)
     #expect '#' as we should be logged into privilleged mode using a level 15 account
     result = session.expect(['#', pexpect.TIMEOUT])
 
     if result != 0:
-        print('Failure | Incorrect Password: ', tel_password)
+        print('Failure | Incorrect Password: ', password)
         exit()
           
     # Final Message to allow user to see successful login
@@ -55,7 +54,7 @@ def telnet_connect():
     print('> Connected to: ', ip_address)
     print('> Credentials <')
     print('> Username: ', tel_username)
-    print('> Password: ', tel_password) 
+    print('> Password: ', password) 
     print('------------------------------------------------------------')
 
     #End session
@@ -71,7 +70,7 @@ def ssh_connect():
     print('Begining SSH connection to ', ip_address)
 
     #Begin Session giving the user and IP encoded
-    session = pexpect.spawn('ssh ' + username + '@' + ip_address,
+    session = pexpect.spawn('ssh ' + ssh_username + '@' + ip_address,
      encoding='utf-8', timeout=20)
     result = session.expect(['Password:', pexpect.TIMEOUT, pexpect.EOF])
 
@@ -94,7 +93,7 @@ def ssh_connect():
     print('-------------------------SSH-----------------------------')
     print('> Connected to: ', ip_address)
     print('> Credentials <')
-    print('> Username: ', username)
+    print('> Username: ', ssh_username)
     print('> Password: ', password) 
     print('---------------------------------------------------------')
 
@@ -131,12 +130,12 @@ def configuration_backup():
 
     #Password & Error Check
     print('Testing Password')
-    session.sendline(tel_password)
+    session.sendline(password)
     #expect '#' as we should be logged into privilleged mode using a level 15 account
     result = session.expect(['#', pexpect.TIMEOUT])
 
     if result != 0:
-        print('Failure | Incorrect Password: ', tel_password)
+        print('Failure | Incorrect Password: ', password)
         exit()
     
     #Starts Telnetlib section  - If needed a for loop can be used to read multiple IPs from file  
@@ -163,7 +162,7 @@ def configuration_backup():
     print('> Connected to: ', ip_address)
     print('> Credentials <')
     print('> Username: ', tel_username)
-    print('> Password: ', tel_password) 
+    print('> Password: ', password) 
     print('> Router Configuration Saved as<', + 'Router_Config_', + HOST)
     print('------------------------------------------------------------')
 
