@@ -137,14 +137,9 @@ def configuration_backup():
     print('> Credentials <')
     print('> Username: ', tel_username)
     print('> Password: ', password) 
+    print('> Router Config Saved <')
     print('------------------------------------------------------------')
 
-    #End session
-    #sends quit to console logging us out & informing user
-    print('Quitting Telnet Connection. Goodbye', tel_username)
-    session.sendline('quit')
-    session.close()
-    print('Disconnected.')
     
 #Execution - Add a menu 
 print('Please Select what code you wish to run.')
