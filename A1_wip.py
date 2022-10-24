@@ -142,18 +142,23 @@ def configuration_backup():
     HOST = ip_address    
     tn = telnetlib.Telnet(HOST)
     #Commands to enter on cosole to get config
+    #Suggested fix for sticking issues~~~~~~~~~~
+    tn.read_until(b'Username: ')
+    tn.write(tel_username.encode('ascil') + b'\n')
+    if password:
+        tn.write(password.encode(ascil) + b'\n')
+    #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     tn.write(b'enable\n')
-    #print("Admin Enabled")
-    tn.write(b'cisco\n')
-    #print("Password Entered")
     tn.write(b'show run\n')
     #print("Running Config")
     tn.write(b'exit\n')
     
     #Output
-    reading_control = tn.read_all().decode()
+    reading_control = tn.read_all()
+    #make file in write mode
     save_control = open('Router_Config_' + HOST + '.txt', 'w')
-    save_control.write(reading_control)
+    #Add decode here
+    save_control.write(reading_control.decode(ascil) + b'\n')
     save_control.close()
     print(reading_control)
     
