@@ -105,39 +105,6 @@ def ssh_connect():
 def configuration_backup():
     print('Begining Config Backup via Telnet')
 
-    #Informing User of startup and warning of security risk
-    print('Begining Telnet connection to ', ip_address, ' Please note this is not Secure.')
-    #Create Telnet session - Spawn Session with IP & Include a 20 second countdown to timeout
-    session = pexpect.spawn('telnet ' + ip_address, timeout=20)
-    #Expect username if not Timeout
-    result = session.expect(['Username:', pexpect.TIMEOUT])
-
-    #Error Check to allow user to know where issues lay
-    if result != 0: 
-        print( 'Failure to acquire: ', ip_address)
-        print( 'Please check IP Address and try again.')
-        exit()
-    print('Connected to ', ip_address)
-    #Credentials now must be sent
-    #Username & Error Check
-    print('Testing Username')
-    session.sendline(tel_username)
-    result = session.expect(['Password:', pexpect.TIMEOUT])
-
-    if result != 0:
-        print('Failure | Incorrect Username: ', tel_username)
-        exit()
-
-    #Password & Error Check
-    print('Testing Password')
-    session.sendline(password)
-    #expect '#' as we should be logged into privilleged mode using a level 15 account
-    result = session.expect(['#', pexpect.TIMEOUT])
-
-    if result != 0:
-        print('Failure | Incorrect Password: ', password)
-        exit()
-    
     #Starts Telnetlib section  - If needed a for loop can be used to read multiple IPs from file  
     HOST = ip_address    
     tn = telnetlib.Telnet(HOST)
