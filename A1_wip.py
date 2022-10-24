@@ -116,7 +116,7 @@ def configuration_backup():
         tn.read_until(b'Password: ')
         tn.write(password.encode('ascii') + b'\n')
     #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    tn.write(b'enable\n')
+    tn.write(b'terminal length 0\n')
     tn.write(b'show run\n')
     #print("Running Config")
     tn.write(b'exit\n')
