@@ -146,6 +146,7 @@ def configuration_backup():
     tn.read_until(b'Username: ')
     tn.write(tel_username.encode('ascii') + b'\n')
     if password:
+        tn.read_until(b'Password: ')
         tn.write(password.encode('ascii') + b'\n')
     #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     tn.write(b'enable\n')
