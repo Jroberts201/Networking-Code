@@ -146,7 +146,7 @@ def configuration_backup():
     tn.read_until(b'Username: ')
     tn.write(tel_username.encode('ascil') + b'\n')
     if password:
-        tn.write(password.encode(ascil) + b'\n')
+        tn.write(password.encode('ascil') + b'\n')
     #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     tn.write(b'enable\n')
     tn.write(b'show run\n')
@@ -158,7 +158,8 @@ def configuration_backup():
     #make file in write mode
     save_control = open('Router_Config_' + HOST + '.txt', 'w')
     #Add decode here
-    save_control.write(reading_control.decode(ascil) + b'\n')
+    save_control.write(reading_control.decode('ascil'))
+    save_control.write('\n')
     save_control.close()
     print(reading_control)
     
