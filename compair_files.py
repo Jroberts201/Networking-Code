@@ -76,3 +76,5 @@ def vs_startup
 
 def vs_offline():
     print('wip')
+
+menu()
