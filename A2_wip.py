@@ -243,7 +243,7 @@ def menu():
   print('4: Running Config vs Start Up')
   print('5: Running Config vs Offline Backup')
 
-  selection = input('Enter Number Here: ')
+  selection = input('Enter Selection Here: ')
   if selection == '1':
       telnet_connect()
   elif selection == '2':
@@ -256,5 +256,7 @@ def menu():
         vs_offline()
   else:
       print('Invalid Number, Try again.')
-      
-menu()
+
+if __name__ == "__main__":
+    menu()
+
