@@ -118,7 +118,7 @@ def configuration_backup():
     #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     tn.write(b'terminal length 0\n')
     tn.write(b'show run\n')
-    #print("Running Config")
+    #print('Running Config')
     tn.write(b'exit\n')
     
     #Output
@@ -158,7 +158,7 @@ def vs_startup():
     #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     tn.write(b'terminal length 0\n')
     tn.write(b'show startup-config\n')
-    #print("Running Config")
+    #print('Running Config')
     tn.write(b'exit\n')
     
     #Output
@@ -184,7 +184,7 @@ def vs_startup():
     #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     tn.write(b'terminal length 0\n')
     tn.write(b'show run\n')
-    #print("Running Config")
+    #print('Running Config')
     tn.write(b'exit\n')
     
     #Output
@@ -221,7 +221,7 @@ def vs_startup():
                  print('\tStarting Config:', startline, end='')
              break
 
-     #close files
+         #close files
          running.close()									
          startup.close()									
 
@@ -257,5 +257,5 @@ def menu():
   else:
       print('Invalid Number, Try again.')
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     menu()
