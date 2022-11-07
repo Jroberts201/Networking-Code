@@ -141,7 +141,7 @@ def configuration_backup():
     print('------------------------------------------------------------')
 
 #-------------Comparing----------------# 
-def vs_startup
+def vs_startup():
     print('wip')
 
     # > show startup-config
@@ -164,7 +164,7 @@ def vs_startup
     #Output
     reading_control = tn.read_all()
     #make file in write mode
-    save_control = open('~/labs/prne/compair_startup.txt', 'w')
+    save_control = open('compair_startup.txt', 'w')
     #Add decode here
     save_control.write(reading_control.decode('ascii'))
     save_control.write('\n')
@@ -190,7 +190,7 @@ def vs_startup
     #Output
     reading_control = tn.read_all()
     #make file in write mode
-    save_control = open('~/labs/prne/compair_running.txt'.txt', 'w')
+    save_control = open('compair_running'.txt, 'w')
     #Add decode here
     save_control.write(reading_control.decode('ascii'))
     save_control.write('\n')
@@ -199,8 +199,8 @@ def vs_startup
     #Very Messy ^ Clean it up or rewrite, Can we do it via one connection rather then 2?
                         
     #Read files
-    running = open('~/labs/prne/compair_running.txt', 'r')
-    startup = open('~/labs/prne/compair_startup.txt', 'r')
+    running = open('compair_running.txt', 'r')
+    startup = open('compair_startup.txt', 'r')
     
     #Begin for loop to read each line from file
     lineread = 0
@@ -217,13 +217,13 @@ def vs_startup
              else:
                  print('Line ', lineread, ':')
               # print that line from both files to zhow difference
-              print('\tRunning Config:', runline, end='')
-              print('\tStarting Config:', startline, end='')
+                 print('\tRunning Config:', runline, end='')
+                 print('\tStarting Config:', startline, end='')
              break
 
      #close files
-     running.close()									
-     startup.close()									
+         running.close()									
+         startup.close()									
 
      
     
@@ -250,13 +250,12 @@ def menu():
       ssh_connect()
   elif selection == '3':
       configuration_backup()
-  elif userinput == '4':
+  elif selection == '4':
         vs_startup()
-  elif userinput == '5':
+  elif selection == '5':
         vs_offline()
   else:
       print('Invalid Number, Try again.')
 
 if __name__ == "__main__":
     menu()
-
