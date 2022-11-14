@@ -205,15 +205,16 @@ def vs_startup():
    for line1 in running:
         for line2 in startup:
                 # print same
-                 print('Line ', lineread, ': No Change')	
-             else:
+                 if line1==line2:
+                        print("Identical\n")
+    else:
                  # print that line from both files to zhow difference
                  print(line1 + line2)
              break
              
        #close files
-      running.close()									
-      startup.close()									
+    running.close()									
+    startup.close()									
 
      
     
