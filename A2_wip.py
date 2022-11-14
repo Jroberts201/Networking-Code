@@ -206,11 +206,11 @@ def vs_startup():
         for line2 in startup:
                 # print same
                  if line1==line2:
-                        print("Identical\n")
-    else:
+                        print("Identical")
+                 else:
                  # print that line from both files to zhow difference
                  print(line1 + line2)
-             break
+                 break
              
        #close files
     running.close()									
