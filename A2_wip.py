@@ -202,28 +202,18 @@ def vs_startup():
     running = open('compair_running.txt', 'r')
     startup = open('compair_startup.txt', 'r')
     
-    #Begin for loop to read each line from file
-    lineread = 0
-
-    for runline in running:
-         lineread += 1
-        
-         for startline in startup:
-            
-            # Matchching line s
-             if runline == startline:
+   for line1 in running:
+        for line2 in startup:
                 # print same
                  print('Line ', lineread, ': No Change')	
              else:
-                 print('Line ', lineread, ':')
-              # print that line from both files to zhow difference
-                 print('\tRunning Config:', runline, end='')
-                 print('\tStarting Config:', startline, end='')
+                 # print that line from both files to zhow difference
+                 print(line1 + line2)
              break
-
-         #close files
-         running.close()									
-         startup.close()									
+             
+       #close files
+      running.close()									
+      startup.close()									
 
      
     
