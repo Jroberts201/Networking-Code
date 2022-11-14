@@ -190,7 +190,7 @@ def vs_startup():
     #Output
     reading_control = tn.read_all()
     #make file in write mode
-    save_control = open('compair_running'.txt, 'w')
+    save_control = open('compair_running.txt', 'w')
     #Add decode here
     save_control.write(reading_control.decode('ascii'))
     save_control.write('\n')
