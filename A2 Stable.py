@@ -220,54 +220,53 @@ def vs_offline():
     
     sanitization_yes = ['y', 'yes']
     sanitization_no = ['n', 'no']
-    while True:
-        #.lower - convets input to lowercase for ^ 
-        if check.lower() in sanitization_yes:
-                HOST = ip_address    
-                tn = telnetlib.Telnet(HOST)
-                #Commands to enter on cosole to get config
-                #Suggested fix for sticking issues~~~~~~~~~~
-                tn.read_until(b'Username: ')
-                tn.write(tel_username.encode('ascii') + b'\n')
-                if password:
-                    tn.read_until(b'Password: ')
-                    tn.write(password.encode('ascii') + b'\n')
-                  
-                tn.write(b'terminal length 0\n')
-                tn.write(b'show run\n')
-                #print('Running Config')
-                tn.write(b'exit\n')
-                
-                #Output
-                reading_control = tn.read_all()
-                #make file in write mode
-                save_control = open('offline_running.txt', 'w')
-                #Add decode here
-                save_control.write(reading_control.decode('ascii'))
-                save_control.write('\n')
-                save_control.close()
-                
-                print('Save complete.')
-                print('\n')
-                print('Compairing')
-                
-                # Compair                     
-                off_running = open('offline_running.txt').readline()
-                off_backup = open('Router_Config_' + HOST + '.txt').readline()
-                
-                compair = difflib.unified_diff(off_running, off_backup,'offline_running.txt', 'Router_Config_' + HOST + '.txt')
-                #Use sys as it gives better output
-                sys.stdout.writelines(compair)
-            
-                #close files
+       #.lower - convets input to lowercase for ^ 
+    if check.lower() in sanitization_yes:
+        HOST = ip_address    
+        tn = telnetlib.Telnet(HOST)
+        #Commands to enter on cosole to get config
+        #Suggested fix for sticking issues~~~~~~~~~~
+        tn.read_until(b'Username: ')
+        tn.write(tel_username.encode('ascii') + b'\n')
+        if password:
+            tn.read_until(b'Password: ')
+            tn.write(password.encode('ascii') + b'\n')
+          
+        tn.write(b'terminal length 0\n')
+        tn.write(b'show run\n')
+        #print('Running Config')
+        tn.write(b'exit\n')
+        
+        #Output
+        reading_control = tn.read_all()
+        #make file in write mode
+        save_control = open('offline_running.txt', 'w')
+        #Add decode here
+        save_control.write(reading_control.decode('ascii'))
+        save_control.write('\n')
+        save_control.close()
+        
+        print('Save complete.')
+        print('\n')
+        print('Compairing')
+        
+        # Compair                     
+        off_running = open('offline_running.txt').readline()
+        off_backup = open('Router_Config_' + HOST + '.txt').readline()
+        
+        compair = difflib.unified_diff(off_running, off_backup,'offline_running.txt', 'Router_Config_' + HOST + '.txt')
+        #Use sys as it gives better output
+        sys.stdout.writelines(compair)
+    
+        #close files
 						
-                
-        elif check.lower() in sanitization_no:
-            print('Returning to menu, Please run it.')
-            menu()
-        else:
-            print('Please type Y or N!')
-            vs_offline() # This should be a loop segment - Break / Continue crashes sys
+        
+    elif check.lower() in sanitization_no:
+        print('Returning to menu, Please run it.')
+        menu()
+    else:
+        print('Please type Y or N!')
+        vs_offline() # This should be a loop segment - Break / Continue crashes sys
     
 def menu():
   #Execution - Add a menu 
