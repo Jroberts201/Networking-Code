@@ -200,16 +200,24 @@ def vs_startup():
     
     # Compair these files - use diff                    
     #Read files - This assumes the user is in the same file - Can use absolute paths to fix this - Do if spare time
-    running = open('compair_running.txt').readline()
-    startup = open('compair_startup.txt').readline()
+    print('Save complete.')
+    print('\n')
+    print('Compairing')
     
-    compair = difflib.unified_diff(running, startup,'compair_running.txt', 'compair_startup.txt')
-    #Use sys as it gives better output
-    sys.stdout.writelines(compair)
-
-    #close files
-    running.close()									
-    startup.close()									
+    # Compair                     
+    with open('compair_startup.txt', 'r') as start_configuration:
+        with open('compair_running.txt', 'r') as run_configuration:
+    
+            compair = difflib.unified_diff(
+                
+                start_configuration.readlines(),
+                run_configuration.readlines(),
+                fromfile='Start-Up.txt',
+                tofile='Running.txt',
+                )
+            for line in compair:
+                sys.stdout.write(line)
+							
 
      
     
