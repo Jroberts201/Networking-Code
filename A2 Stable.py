@@ -251,12 +251,20 @@ def vs_offline():
         print('Compairing')
         
         # Compair                     
-        off_running = open('offline_running.txt').readline()
-        off_backup = open('Router_Config_' + HOST + '.txt').readline()
+        with open('offline_running.txt', 'r') as running_configuration:
+            with open('Router_Config_' + HOST + '.txt', 'r') as offline_backup:
         
-        compair = difflib.unified_diff(off_running, off_backup,'offline_running.txt', 'Router_Config_' + HOST + '.txt')
-        #Use sys as it gives better output
-        sys.stdout.writelines(compair)
+                compair = difflib.unified_diff(
+                    
+                    running_configuration.readlines(),
+                    offline_backup.readlines(),
+                    fromfile='offline_running.txt',
+                    tofile='Router_Config_' + HOST + '.txt',
+                    )
+                for line in compair:
+                    sys.stdout.write(line)
+        #Use sys as it gives  output
+        
     
         #close files
 						
