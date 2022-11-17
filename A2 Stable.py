@@ -1,10 +1,3 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Thu Nov 13 18:56:49 2022
-
-@author: Josh
-"""
-
 #Importing Assets
 import pexpect
     # ^ Used for SSH and Telnet
@@ -267,8 +260,7 @@ def vs_offline():
                 sys.stdout.writelines(compair)
             
                 #close files
-                off_running.close()									
-                off_backup.close()							
+						
                 
         elif check.lower() in sanitization_no:
             print('Returning to menu, Please run it.')
