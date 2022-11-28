@@ -7,7 +7,7 @@
 #Import List - Libaries used to make the program function
 import netmiko
 
-
+#Table to hold connect information
 def connect():
     connectionInfo = {
         "device_type":"cisco_ios", 
@@ -19,6 +19,7 @@ def connect():
         
     session = netmiko.ConnectHandler(**connectionInfo) # gives var session the netmiko child on the device
     session.enable() # Enables the config on router
+    print('---- Connection Established ----')
 
     ##Example of command to insert
     #runConf = session.send_command("show running-config")
@@ -29,12 +30,41 @@ def loopback_commands
     #The IPv4 address for each loopback interface must be unique and unused by any other interface.
     #Return IP address via "show IP interface brief" 
     #Return loopback via "show ip command"
+    config_commands = {
+    'config terminal',
+    'int loopback 1',
+    'ip add 10.0.0.1 255.255.255.0',
+    }
     
+    #Uses table above to push commands.
+    loopback_cmd = session.connectionInfo.send_config_set()config_commands
+    print('---- Loopback Established ----')
+    print('{}\n'.format (loopback_cmd))
     
-def loopback
+    #Output
+    ip_table = session.connectionInfo.send_command('show ip interface brief')
+    print('{}\n'.format (ip_table))
+    
+def loopback_execute
     connect()
     loopback_commands()
     
 def menu():
-    menu = []
-    print('WIP')
+  print('Please Select what code you wish to run.')
+  print('1: Telnet Connection')
+  print('2: SSH Connection')
+  print('3: Exit')
+
+  selection = input('Enter Selection Here: ')
+  if selection == '1':
+      loopback_execute()
+  elif selection == '2':
+      print('WIP')
+  elif selection == '3':
+      print('Goodbye')
+  else:
+      print('Invalid Input, Try again.')
+
+#Do not edit - Start 
+if __name__ == '__main__':
+    menu()
