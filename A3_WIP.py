@@ -51,8 +51,8 @@ def loopback_execute
     
 def menu():
   print('Please Select what code you wish to run.')
-  print('1: Telnet Connection')
-  print('2: SSH Connection')
+  print('1: Loopback Configuration')
+  print('2: N/A')
   print('3: Exit')
 
   selection = input('Enter Selection Here: ')
