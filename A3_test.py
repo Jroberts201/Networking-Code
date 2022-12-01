@@ -27,19 +27,21 @@ def loopback():
     #Return loopback via "show ip command"
     
     #Asks how many Loopbacks you want
-    while True:
-        try:
-            runTime = int(input("Enter how many Loopback Count: "))
-        except ValueError:
-            print("Please, enter a valid number")
-            continue
-        else:
-            print(f'You entered: {runTime}')
-            break
+   # while True:
+   #     try:
+   #         runTime = int(input("Enter how many Loopback Count: "))
+   #     except ValueError:
+   #         print("Please, enter a valid number")
+   #         continue
+   #     else:
+   #         print(f'You entered: {runTime}')
+   #         break
 
-        if runTime > '2048':
-            print('You cannot make more then 2048 Loopback Addresses')
-    
+   #     if runTime > '2048':
+   #         print('You cannot make more then 2048 Loopback Addresses')
+   
+    print('Sorry however for now only 1 loopback may be made for this time')
+    runTime = 1
     #Sends 
     while runTime > 0: 
         #For some reason ip add is sometimes send before int loopback - Resolutions?
@@ -49,8 +51,8 @@ def loopback():
         config_commands = {
         f'int loopback {runTime}',
         #Why does adding another fix it? - Does not fix 100% maybe 2/3
-        f'int loopback {runTime}',
-        f'int loopback {runTime}',
+        #f'int loopback {runTime}',
+        
         f'ip add 172.0.{runTime}.1 255.255.255.0',
         
         
