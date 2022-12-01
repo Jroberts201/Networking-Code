@@ -1,5 +1,7 @@
+#Connection and Command Handler
 import netmiko
-
+#Time to ensure code is sent in appropriate order
+import time
 #Table to hold connect information
 def loopback():
     connectionInfo = {
@@ -41,15 +43,26 @@ def loopback():
     #Sends 
     while runTime > 0:
         
+        #For some reason ip add is sometimes send before Loopback - Resolutions?
+        #    - Remove this dict and use line.send to do it individually 
+        #    - 
+        
         config_commands = {
         f'int loopback {runTime}',
+        #Why does adding another fix it?
+        f'int loopback {runTime}',
         f'ip add 172.0.{runTime}.1 255.255.255.0',
+        
+        
         }
 
-        #Uses table above to push commands.
+        #Uses table above to push commands enters conf t and ends automatically.
         loopback_cmd = session.send_config_set(config_commands)
+        #Lets users know where we are in running
         print(f'---- Loopback {runTime} Established ----')
+        #New line before Print
         print('{}\n'.format (loopback_cmd))
+        #Reduces number by 1 to lower all inputs
         runTime = runTime - 1
     
     #Output
