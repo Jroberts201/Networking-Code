@@ -12,7 +12,7 @@ def loopback():
         #Admin password
         "secret":"class", 
         }
-        
+ #Before running make sure you've set up username and password as it will error       
     session = netmiko.ConnectHandler(**connectionInfo) # gives var session the netmiko child on the device
     session.enable() # Enables the config on router
     print('---- Connection Established | Loopback  ----')
