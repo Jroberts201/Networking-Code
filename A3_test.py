@@ -6,8 +6,9 @@ def loopback():
         "device_type":"cisco_ios", 
         "host":"192.168.56.101", #IP
         "username":"cisco",
-        "password":"cisco", 
-        "secret":"class" #Admin password
+        "password":"cisco",
+        #Admin password
+        "secret":"class", 
         }
         
     session = netmiko.ConnectHandler(**connectionInfo) # gives var session the netmiko child on the device
