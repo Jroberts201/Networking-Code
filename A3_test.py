@@ -35,15 +35,15 @@ def loopback():
             print(f'You entered: {runTime}')
             break
 
-        if runTime > '10':
-            print('You cannot make more then 10 Loopback Addresses at this time for stability')
+        if runTime > '2048':
+            print('You cannot make more then 2048 Loopback Addresses')
     
     #Sends 
     while runTime > 0:
         
         config_commands = {
         f'int loopback {runTime}',
-        f'ip add 10.0.0.{runTime} 255.255.255.0',
+        f'ip add 172.0.{runTime}.1 255.255.255.0',
         }
 
         #Uses table above to push commands.
