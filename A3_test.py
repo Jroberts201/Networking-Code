@@ -1,7 +1,6 @@
 #Connection and Command Handler
 import netmiko
-#Time to ensure code is sent in appropriate order
-import time
+
 #Table to hold connect information
 def loopback():
     connectionInfo = {
