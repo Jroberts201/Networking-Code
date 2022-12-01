@@ -139,12 +139,20 @@ def OSPF():
    'network 20.0.0.0' 
    ]
    
+   est_rip_csr = session_CSR.send_config_set(rip_csr)        
+   est_rip_r2 = session_R2.send_config_set(rip_r2)
+   
+   
+   
    print('---- RIP Established ----')
+   
+   print('{}\n'.format (est_rip_csr))
+   print('{}\n'.format (est_rip_r2))
     #Show IP route rip would be best here however 2 routers are connected on NetLabs 
-   sh_rip_csr = session_CSR.send_command('show ip route')
+   sh_rip_csr = session_CSR.send_command('show ip route rip')
    print('{}\n'.format (sh_rip_csr))
    
-   sh_rip_r2 = session_R2.send_command('show ip route')
+   sh_rip_r2 = session_R2.send_command('show ip route rip')
    print('{}\n'.format (sh_rip_r2))
         
    session_CSR.disconnect
