@@ -24,19 +24,36 @@ def loopback():
     #Return IP address via "show IP interface brief" 
     #Return loopback via "show ip command"
     
-    config_commands = {
-    'config terminal',
-    'int loopback 1',
-    'ip add 10.0.0.1 255.255.255.0',
-    }
+    #Asks how many Loopbacks you want
+    while True:
+        try:
+            runTime = int(input("Enter how many Loopback Count: "))
+        except ValueError:
+            print("Please, enter a valid number")
+            continue
+        else:
+            print(f'You entered: {runTime}')
+            break
+
+        if runTime > '10':
+            print('You cannot make more then 10 Loopback Addresses at this time for stability')
     
-    #Uses table above to push commands.
-    loopback_cmd = session.connectionInfo.send_config_set(config_commands)
-    print('---- Loopback Established ----')
-    print('{}\n'.format (loopback_cmd))
+    #Sends 
+    while runTime > 0:
+        
+        config_commands = {
+        f'int loopback {runTime}',
+        f'ip add 10.0.0.{runTime} 255.255.255.0',
+        }
+
+        #Uses table above to push commands.
+        loopback_cmd = session.send_config_set(config_commands)
+        print(f'---- Loopback {runTime} Established ----')
+        print('{}\n'.format (loopback_cmd))
+        runTime = runTime - 1
     
     #Output
-    ip_table = session.connectionInfo.send_command('show ip interface brief')
+    ip_table = session.send_command('show ip interface brief')
     print('{}\n'.format (ip_table))
     
 
