@@ -129,14 +129,14 @@ def OSPF():
    print('{}\n'.format (ip_r2))
    
    rip_csr = [
-   'router rip'
-   'network 172.16.1.0' 
-   'network 10.0.0.0'    
+   'router rip',
+   'network 172.16.1.0',
+   'network 10.0.0.0',    
    ]
    rip_r2 = [
-   'router rip'
-   'network 172.16.1.0'
-   'network 20.0.0.0' 
+   'router rip',
+   'network 172.16.1.0',
+   'network 20.0.0.0', 
    ]
    
    est_rip_csr = session_CSR.send_config_set(rip_csr)        
