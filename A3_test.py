@@ -42,29 +42,40 @@ def loopback():
     
     #Sends 
     while runTime > 0:
+#<These comments are linked to a better way of doing this code however errors, Uncomment if resolution is found      
+#        #For some reason ip add is sometimes send before int loopback - Resolutions?
+#        #    - Remove this dict and use line.send to do it individually 
+#        #    - 
         
-        #For some reason ip add is sometimes send before Loopback - Resolutions?
-        #    - Remove this dict and use line.send to do it individually 
-        #    - 
-        
-        config_commands = {
-        f'int loopback {runTime}',
-        #Why does adding another fix it?
-        f'int loopback {runTime}',
-        f'ip add 172.0.{runTime}.1 255.255.255.0',
+#        config_commands = {
+#        f'int loopback {runTime}',
+#        #Why does adding another fix it? - Does not fix 100% maybe 2/3
+#        f'int loopback {runTime}',
+#        f'ip add 172.0.{runTime}.1 255.255.255.0',
         
         
-        }
+#        }
 
-        #Uses table above to push commands enters conf t and ends automatically.
-        loopback_cmd = session.send_config_set(config_commands)
-        #Lets users know where we are in running
+#        #Uses table above to push commands enters conf t and ends automatically.
+#        loopback_cmd = session.send_config_set(config_commands)
+#        #Lets users know where we are in running
+     
+    
+        ct = session.send_command('config term')
+        lb = session.send_command(f'int loopback {runTime}')
+        ipa = session.send_command(f'ip add 172.0.{runTime}.1 255.255.255.0')
+        end = session.send_command('end')
+        
         print(f'---- Loopback {runTime} Established ----')
         #New line before Print
-        print('{}\n'.format (loopback_cmd))
+#        print('{}\n'.format (loopback_cmd))
+        print(ct)
+        print(lb)
+        print(ipa)
+        print(end)
         #Reduces number by 1 to lower all inputs
         runTime = runTime - 1
-    
+        
     #Output
     ip_table = session.send_command('show ip interface brief')
     print('{}\n'.format (ip_table))
