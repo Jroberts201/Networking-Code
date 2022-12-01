@@ -40,7 +40,7 @@ def loopback():
 #        if runTime > '2048':
 #            print('You cannot make more then 2048 Loopback Addresses')
    
-   runTime = 1
+    runTime = 1
     
     #Sends cmds
     while runTime > 0: 
