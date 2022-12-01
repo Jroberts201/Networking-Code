@@ -71,7 +71,7 @@ def loopback():
 
 def OSPF():
    print('Begining OSPF Config')
-   print('Please be aware this command will create a loopback interface on 10.0.{1/2}.1 do you wish to Run?')
+   print('Please be aware this command will create loopback interface 100 on 10/20.0.0.1')
   
    
    CSR = {
@@ -104,12 +104,12 @@ def OSPF():
          
    
    csr_commands = [
-   'int loopback 1',     
+   'int loopback 100',     
    'ip add 10.0.0.1 255.0.0.0',               
    ]
    
    r2_commands = [
-   'int loopback 1',     
+   'int loopback 100',     
    'ip add 20.0.0.1 255.0.0.0',               
    ]
    
@@ -140,13 +140,14 @@ def OSPF():
    ]
    
    print('---- RIP Established ----')
-   rip_csr = session_CSR.send_command('show ip route rip')
-   print('{}\n'.format (rip_csr))
+   sh_rip_csr = session_CSR.send_command('show ip route rip')
+   print('{}\n'.format (sh_rip_csr))
    
-   rip_r2 = session_R2.send_command('show ip route rip')
-   print('{}\n'.format (rip_r2))
+   sh_rip_r2 = session_R2.send_command('show ip route rip')
+   print('{}\n'.format (sh_rip_r2))
         
-
+   session_CSR.disconnect
+   session_R2.disconnect
         
 def menu():
   print('Please Select what code you wish to run.')
