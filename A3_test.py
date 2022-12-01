@@ -70,88 +70,83 @@ def loopback():
     session.disconnect()
 
 def OSPF():
-    print('Begining OSPF Config')
-    warning = input('Please be aware this command will create a loopback interface on 10.0.{1/2}.1 do you wish to Run?')
-    print('Accepted Input Y/N')
-    if warning.lower == 'y':
-        CSR = {
-            'device_type':'cisco_ios', 
-            'host':'192.168.56.101', #IP
-            'username':'cisco',
-            'password':'cisco',
-            #Admin password
-            'secret':'class', 
-            }
+   print('Begining OSPF Config')
+   print('Please be aware this command will create a loopback interface on 10.0.{1/2}.1 do you wish to Run?')
+  
+   
+   CSR = {
+       'device_type':'cisco_ios', 
+       'host':'192.168.56.101', #IP
+       'username':'cisco',
+       'password':'cisco',
+       #Admin password
+       'secret':'class', 
+       }
 
-        R2 = {
-            'device_type':'cisco_ios', 
-            'host':'192.168.56.130', 
-            'username':'cisco',
-            'password':'cisco',
-            #Admin password
-            'secret':'class', 
-            }
-     #Before running make sure you've set up username and password as it will error   
-     # Use router list to config at the same time - Idea scrapped different codes needed
-        #router_list = [CSR, R2]
+   R2 = {
+       'device_type':'cisco_ios', 
+       'host':'192.168.56.130', 
+       'username':'cisco',
+       'password':'cisco',
+       #Admin password
+       'secret':'class', 
+       }
+#Before running make sure you've set up username and password as it will error   
+# Use router list to config at the same time - Idea scrapped different codes needed
+   #router_list = [CSR, R2]
 
-        session_CSR = netmiko.ConnectHandler(**CSR)
-        session_CSR.enable
-        session_R2 = netmiko.ConnectHandler(**R2)
-        session_R2.enable
+   session_CSR = netmiko.ConnectHandler(**CSR)
+   session_CSR.enable
+   session_R2 = netmiko.ConnectHandler(**R2)
+   session_R2.enable
 
-        #for router in router_list():
-              
-        
-        csr_commands = [
-        'int loopback 1',     
-        'ip add 10.0.0.1 255.0.0.0',               
-        ]
-        
-        r2_commands = [
-        'int loopback 1',     
-        'ip add 20.0.0.1 255.0.0.0',               
-        ]
-        
-        #Uses table above to push commands enters conf t and ends automatically.
-        loopback_csr = session_CSR.send_config_set(csr_commands)        
-        loopback_r2 = session_R2.send_config_set(r2_commands)
+   #for router in router_list():
+         
+   
+   csr_commands = [
+   'int loopback 1',     
+   'ip add 10.0.0.1 255.0.0.0',               
+   ]
+   
+   r2_commands = [
+   'int loopback 1',     
+   'ip add 20.0.0.1 255.0.0.0',               
+   ]
+   
+   #Uses table above to push commands enters conf t and ends automatically.
+   loopback_csr = session_CSR.send_config_set(csr_commands)        
+   loopback_r2 = session_R2.send_config_set(r2_commands)
+   
+
+   print('---- Loopback Established ----')
+   print('{}\n'.format (loopback_csr))
+   print('{}\n'.format (loopback_r2))
+   print('---- IP View ----')
+   ip_csr = session_CSR.send_command('show ip interface brief')
+   print('{}\n'.format (ip_csr))
+   
+   ip_r2 = session_R2.send_command('show ip interface brief')
+   print('{}\n'.format (ip_r2))
+   
+   rip_csr = [
+   'router rip'
+   'network 172.16.1.1' 
+   'network 10.0.0.0'    
+   ]
+   rip_r2 = [
+   'router rip'
+   'network 172.16.1.2'
+   'network 20.0.0.0' 
+   ]
+   
+   print('---- RIP Established ----')
+   rip_csr = session_CSR.send_command('show ip route rip')
+   print('{}\n'.format (rip_csr))
+   
+   rip_r2 = session_R2.send_command('show ip route rip')
+   print('{}\n'.format (rip_r2))
         
 
-        print('---- Loopback Established ----')
-        print('{}\n'.format (loopback_csr))
-        print('{}\n'.format (loopback_r2))
-        print('---- IP View ----')
-        ip_csr = session_CSR.send_command('show ip interface brief')
-        print('{}\n'.format (ip_csr))
-        
-        ip_r2 = session_R2.send_command('show ip interface brief')
-        print('{}\n'.format (ip_r2))
-        
-        rip_csr = [
-        'router rip'
-        'network 172.16.1.1' 
-        'network 10.0.0.0'    
-        ]
-        rip_r2 = [
-        'router rip'
-        'network 172.16.1.2'
-        'network 20.0.0.0' 
-        ]
-        
-        print('---- RIP Established ----')
-        rip_csr = session_CSR.send_command('show ip route rip')
-        print('{}\n'.format (rip_csr))
-        
-        rip_r2 = session_R2.send_command('show ip route rip')
-        print('{}\n'.format (rip_r2))
-        
-    elif warning.lower == 'n':
-        print('Returning to menu.')
-        menu()
-    else:
-        print('Please type Y or N!')
-        OSPF()
         
 def menu():
   print('Please Select what code you wish to run.')
@@ -172,4 +167,3 @@ def menu():
 #Do not edit - Start 
 if __name__ == '__main__':
     menu()
-
