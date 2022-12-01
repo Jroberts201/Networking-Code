@@ -27,26 +27,26 @@ def loopback():
     #Return loopback via "show ip command"
     
     #Asks how many Loopbacks you want
-   # while True:
-   #     try:
-   #         runTime = int(input("Enter how many Loopback Count: "))
-   #     except ValueError:
-   #         print("Please, enter a valid number")
-   #         continue
-   #     else:
-   #         print(f'You entered: {runTime}')
-   #         break
+    while True:
+        try:
+            runTime = int(input("Enter how many Loopback Count: "))
+        except ValueError:
+            print("Please, enter a valid number")
+            continue
+        else:
+            print(f'You entered: {runTime}')
+            break
 
-   #     if runTime > '2048':
-   #         print('You cannot make more then 2048 Loopback Addresses')
+        if runTime > '2048':
+            print('You cannot make more then 2048 Loopback Addresses')
    
-    print('Sorry however for now only 1 loopback may be made for this time')
-    runTime = 1
-    #Sends 
+    
+    
+    #Sends cmds
     while runTime > 0: 
         #For some reason ip add is sometimes send before int loopback - Resolutions?
         #    - Remove this dict and use line.send to do it individually 
-        #    - 
+        #    - Figure out how to fix
         
         config_commands = {
         f'int loopback {runTime}',
@@ -54,7 +54,8 @@ def loopback():
         #f'int loopback {runTime}',
         
         f'ip add 172.0.{runTime}.1 255.255.255.0',
-        
+        #Adding no sh seems to fix the issue?
+        f'no sh'
         
         }
 
