@@ -27,20 +27,20 @@ def loopback():
     #Return loopback via "show ip command"
     
     #Asks how many Loopbacks you want
-    while True:
-        try:
-            runTime = int(input("Enter how many Loopback Count: "))
-        except ValueError:
-            print("Please, enter a valid number")
-            continue
-        else:
-            print(f'You entered: {runTime}')
-            break
+#    while True:
+#        try:
+#            runTime = int(input("Enter how many Loopback Count: "))
+#        except ValueError:
+#            print("Please, enter a valid number")
+#            continue
+#        else:
+#            print(f'You entered: {runTime}')
+#            break
 
-        if runTime > '2048':
-            print('You cannot make more then 2048 Loopback Addresses')
+#        if runTime > '2048':
+#            print('You cannot make more then 2048 Loopback Addresses')
    
-    
+   runTime = 1
     
     #Sends cmds
     while runTime > 0: 
@@ -51,10 +51,9 @@ def loopback():
         config_commands = {
         f'int loopback {runTime}',
         #Why does adding another fix it? - Does not fix 100% maybe 2/3
-        #f'int loopback {runTime}',
-        
+        #f'int loopback {runTime}',        
         f'ip add 172.0.{runTime}.1 255.255.255.0',
-        #Adding no sh seems to fix the issue?
+        #Adding no sh seems to fix the issue? - It does not. - It does when only 1 is made however
         f'no sh'
         
         }
