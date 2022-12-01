@@ -130,12 +130,12 @@ def OSPF():
    
    rip_csr = [
    'router rip'
-   'network 172.16.1.1' 
+   'network 172.16.1.0' 
    'network 10.0.0.0'    
    ]
    rip_r2 = [
    'router rip'
-   'network 172.16.1.2'
+   'network 172.16.1.0'
    'network 20.0.0.0' 
    ]
    
